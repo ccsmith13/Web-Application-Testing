@@ -1,47 +1,41 @@
 import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 
+
+export function addBall(currentBalls) {
+    if (currentBalls < 3) {
+        return currentBalls + 1
+    }
+    if (currentBalls === 3) {
+        return 0
+    }
+
+}
+export function addStrike(currentStrikes) {
+    if (currentStrikes < 2) {
+        return currentStrikes + 1
+    }
+    if (currentStrikes === 2) {
+        return 0
+    }
+}
+export function addFoul(currentStrikes) {
+    if (currentStrikes === 0) {
+        return (1);
+    }
+    if (currentStrikes === 1) {
+        return (2);
+    }
+
+}
+export function addHit(currentHits) {
+    return (currentHits + 1);
+}
 export default function Display() {
     const [strikes, setStrikes] = useState(0);
     const [balls, setBalls] = useState(0);
     const [hits, setHits] = useState(0);
 
-    const addBall = () => {
-        let tempBalls = balls;
-        if (tempBalls < 3) {
-            setBalls(tempBalls + 1);
-        }
-        if (tempBalls === 3) {
-            setBalls(0);
-            setStrikes(0);
-        }
-
-    }
-    const addStrike = () => {
-        let tempStrikes = strikes;
-        if (tempStrikes < 2) {
-            setStrikes(tempStrikes + 1);
-        }
-        if (tempStrikes === 2) {
-            setBalls(0);
-            setStrikes(0);
-        }
-    }
-    const addFoul = () => {
-        let tempStrikes = strikes;
-        if (tempStrikes === 0) {
-            setStrikes(1);
-        }
-        if (tempStrikes === 1) {
-            setStrikes(2);
-        }
-    }
-    const addHit = () => {
-        let tempHits = hits;
-        setHits(tempHits + 1);
-        setBalls(0);
-        setStrikes(0);
-    }
     const reset = () => {
         setBalls(0);
         setStrikes(0);
@@ -52,10 +46,10 @@ export default function Display() {
         <div>
             <Dashboard strikes={strikes} balls={balls} hits={hits} />
             <div>
-                <button onClick={addBall}>Ball</button>
-                <button onClick={addStrike}>Strike</button>
-                <button onClick={addHit}>Hit</button>
-                <button onClick={addFoul}>Foul</button>
+                <button onClick={() => { if (balls === 3) { setStrikes(0) }; setBalls(addBall(balls)) }}>Ball</button>
+                <button onClick={() => { if (strikes === 2) { setBalls(0); setStrikes(0) } setStrikes(addStrike(strikes)) }}>Strike</button>
+                <button onClick={() => { setStrikes(0); setBalls(0); setHits(addHit(hits)); }}>Hit</button>
+                <button onClick={() => { addFoul(strikes) }}>Foul</button>
                 <button onClick={reset}>Reset</button>
             </div>
         </div >
